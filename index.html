@@ -26,11 +26,6 @@
       <input type="text" class="form-control" id="namaTamu" placeholder="Contoh: Bapak/Ibu Andi & Keluarga">
     </div>
 
-    <div class="mb-3">
-      <label for="linkUndangan" class="form-label">Link Undangan</label>
-      <input type="url" class="form-control" id="linkUndangan" placeholder="Contoh: https://satumomen.com/ai-dan-irfan?to=Andi">
-    </div>
-
     <button onclick="generateLink()" class="btn btn-primary w-100">Buat Link WhatsApp</button>
 
     <div id="hasil" class="mt-4 d-none">
@@ -45,28 +40,37 @@
 </div>
 
 <script>
+  // Ambil parameter dari URL
+  function getParameterByName(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
+
   function generateLink() {
     const nama = document.getElementById('namaTamu').value.trim();
-    const link = document.getElementById('linkUndangan').value.trim();
+    const baseUrl = getParameterByName('url');
 
-    if (!nama || !link) {
-      alert('Silakan isi nama tamu dan link undangan.');
+    if (!nama || !baseUrl) {
+      alert('Silakan isi nama tamu dan pastikan URL undangan sudah tersedia di parameter ?url=');
       return;
     }
 
+    const encodedNama = encodeURIComponent(nama);
+    const fullLink = `${baseUrl}?to=${encodedNama}`;
+
     const pesan = `Kepada Yth.%0A` +
                   `Bapak/Ibu/Saudara/i%0A` +
-                  `*${encodeURIComponent(nama)}*%0A` +
+                  `*${encodedNama}*%0A` +
                   `_di tempat_%0A%0A` +
                   `Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara Resepsi Pernikahan kami.%0A%0A` +
                   `Info lebih lengkap klik link di bawah ini:%0A` +
-                  `${encodeURIComponent(link)}%0A%0A` +
+                  `${encodeURIComponent(fullLink)}%0A%0A` +
                   `Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.%0A%0A` +
                   `Kami yang berbahagia,%0A*Keluarga Kedua Mempelai*%0A%0A` +
                   `_Mohon maaf perihal undangan hanya dibagikan melalui pesan ini._`;
 
     const waUrl = `https://wa.me/?text=${pesan}`;
-    
+
     document.getElementById('waLink').value = waUrl;
     document.getElementById('previewLink').href = waUrl;
     document.getElementById('hasil').classList.remove('d-none');
