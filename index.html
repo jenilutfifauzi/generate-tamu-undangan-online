@@ -48,7 +48,9 @@
 
   function generateLink() {
     const nama = document.getElementById('namaTamu').value.trim();
-    const baseUrl = getParameterByName('url');
+    const baseUrlRaw = getParameterByName('url');
+    const baseUrl = baseUrlRaw ? baseUrlRaw.replace(/^url=/, '') : '';
+    const keluarga = getParameterByName('tag') || 'Keluarga Kedua Mempelai';
 
     if (!nama || !baseUrl) {
       alert('Silakan isi nama tamu dan pastikan URL undangan sudah tersedia di parameter ?url=');
@@ -66,7 +68,7 @@
                   `Info lebih lengkap klik link di bawah ini:%0A` +
                   `${encodeURIComponent(fullLink)}%0A%0A` +
                   `Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.%0A%0A` +
-                  `Kami yang berbahagia,%0A*Keluarga Kedua Mempelai*%0A%0A` +
+                  `Kami yang berbahagia,%0A*${keluarga}*%0A%0A` +
                   `_Mohon maaf perihal undangan hanya dibagikan melalui pesan ini._`;
 
     const waUrl = `https://wa.me/?text=${pesan}`;
