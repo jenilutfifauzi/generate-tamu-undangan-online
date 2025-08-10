@@ -4,37 +4,370 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Generator Undangan WhatsApp</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
-      background-color: #f8f9fa;
+    :root {
+      --primary-color: #25D366;
+      --primary-dark: #1DA851;
+      --secondary-color: #128C7E;
+      --accent-color: #DCF8C6;
+      --text-primary: #1f2937;
+      --text-secondary: #6b7280;
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e5e7eb;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
     .container {
-      max-width: 650px;
-      margin-top: 60px;
+      max-width: 480px;
+      margin: 0 auto;
+      padding-top: 2rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-icon i {
+      font-size: 1.75rem;
+      color: white;
+    }
+
+    .title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.025em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-family: inherit;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.8;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: white;
+      box-shadow: var(--shadow-md);
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--secondary-color), #0d7377);
+      color: white;
+      box-shadow: var(--shadow-md);
+      width: 100%;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.75rem 1rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-primary);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .input-group {
+      display: flex;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .input-group .form-input {
+      border-radius: 0;
+      border-right: none;
+      flex: 1;
+    }
+
+    .input-group .btn-outline {
+      border-radius: 0;
+      border-left: none;
+      white-space: nowrap;
+    }
+
+    .result-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .result-section.hidden {
+      display: none;
+    }
+
+    .success-message {
+      background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(18, 140, 126, 0.1));
+      border: 1px solid rgba(37, 211, 102, 0.2);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .success-message i {
+      color: var(--primary-color);
+      font-size: 1.25rem;
+    }
+
+    .success-message-text {
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .loading .btn-primary {
+      background: #9ca3af;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        padding-top: 1rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+      }
+      
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-secondary);
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="card p-4 shadow">
-    <h4 class="mb-4 text-center">Generator Link Undangan WhatsApp</h4>
-
-    <div class="mb-3">
-      <label for="namaTamu" class="form-label">Nama Tamu</label>
-      <input type="text" class="form-control" id="namaTamu" placeholder="Contoh: Bapak/Ibu Andi & Keluarga">
+  <div class="card">
+    <div class="header">
+      <div class="header-icon">
+        <i class="fab fa-whatsapp"></i>
+      </div>
+      <h1 class="title">Generator Undangan</h1>
+      <p class="subtitle">Buat link undangan WhatsApp dengan mudah dan elegan</p>
     </div>
 
-    <button onclick="generateLink()" class="btn btn-primary w-100">Buat Link WhatsApp</button>
+    <div class="form-group">
+      <label for="namaTamu" class="form-label">
+        <i class="fas fa-user" style="margin-right: 0.5rem; color: var(--primary-color);"></i>
+        Nama Tamu
+      </label>
+      <input 
+        type="text" 
+        class="form-input" 
+        id="namaTamu" 
+        placeholder="Contoh: Bapak/Ibu Andi & Keluarga"
+        autocomplete="off"
+      >
+    </div>
 
-    <div id="hasil" class="mt-4 d-none">
-      <label class="form-label mt-3">Hasil Link WhatsApp:</label>
-      <div class="input-group">
-        <input type="text" class="form-control" id="waLink" readonly>
-        <button class="btn btn-outline-secondary" onclick="copyToClipboard()">Copy</button>
+    <button onclick="generateLink()" class="btn btn-primary" id="generateBtn">
+      <i class="fas fa-magic"></i>
+      Buat Link WhatsApp
+    </button>
+
+    <div id="hasil" class="result-section hidden">
+      <div class="success-message fade-in">
+        <i class="fas fa-check-circle"></i>
+        <span class="success-message-text">Link WhatsApp berhasil dibuat!</span>
       </div>
-      <a href="#" id="previewLink" target="_blank" class="btn btn-success w-100 mt-3">Kirim via WhatsApp</a>
+      
+      <div class="form-group">
+        <label class="form-label">
+          <i class="fas fa-link" style="margin-right: 0.5rem; color: var(--secondary-color);"></i>
+          Link WhatsApp
+        </label>
+        <div class="input-group">
+          <input type="text" class="form-input" id="waLink" readonly>
+          <button class="btn btn-outline" onclick="copyToClipboard()">
+            <i class="fas fa-copy"></i>
+            Copy
+          </button>
+        </div>
+      </div>
+      
+      <a href="#" id="previewLink" target="_blank" class="btn btn-success">
+        <i class="fab fa-whatsapp"></i>
+        Kirim via WhatsApp
+      </a>
     </div>
   </div>
 </div>
@@ -51,41 +384,132 @@
     const baseUrlRaw = getParameterByName('url');
     const baseUrl = baseUrlRaw ? baseUrlRaw.replace(/^url=/, '') : '';
     const keluarga = getParameterByName('tag') || 'Keluarga Kedua Mempelai';
+    const generateBtn = document.getElementById('generateBtn');
 
     if (!nama || !baseUrl) {
-      alert('Silakan isi nama tamu dan pastikan URL undangan sudah tersedia di parameter ?url=');
+      showAlert('Silakan isi nama tamu dan pastikan URL undangan sudah tersedia di parameter ?url=', 'error');
       return;
     }
 
-    const encodedNama = encodeURIComponent(nama);
-    const fullLink = `${baseUrl}?to=${encodedNama}`;
+    // Show loading state
+    generateBtn.classList.add('loading');
+    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuat Link...';
 
-    const pesan = `Kepada Yth.%0A` +
-                  `Bapak/Ibu/Saudara/i%0A` +
-                  `*${encodedNama}*%0A` +
-                  `_di tempat_%0A%0A` +
-                  `Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara Resepsi Pernikahan kami.%0A%0A` +
-                  `Info lebih lengkap klik link di bawah ini:%0A` +
-                  `${encodeURIComponent(fullLink)}%0A%0A` +
-                  `Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.%0A%0A` +
-                  `Kami yang berbahagia,%0A*${keluarga}*%0A%0A` +
-                  `_Mohon maaf perihal undangan hanya dibagikan melalui pesan ini._`;
+    // Simulate processing time for better UX
+    setTimeout(() => {
+      const encodedNama = encodeURIComponent(nama);
+      const fullLink = `${baseUrl}?to=${encodedNama}`;
 
-    const waUrl = `https://wa.me/?text=${pesan}`;
+      const pesan = `Kepada Yth.%0A` +
+                    `Bapak/Ibu/Saudara/i%0A` +
+                    `*${encodedNama}*%0A` +
+                    `_di tempat_%0A%0A` +
+                    `Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara Resepsi Pernikahan kami.%0A%0A` +
+                    `Info lebih lengkap klik link di bawah ini:%0A` +
+                    `${encodeURIComponent(fullLink)}%0A%0A` +
+                    `Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.%0A%0A` +
+                    `Kami yang berbahagia,%0A*${keluarga}*%0A%0A` +
+                    `_Mohon maaf perihal undangan hanya dibagikan melalui pesan ini._`;
 
-    document.getElementById('waLink').value = waUrl;
-    document.getElementById('previewLink').href = waUrl;
-    document.getElementById('hasil').classList.remove('d-none');
+      const waUrl = `https://wa.me/?text=${pesan}`;
+
+      document.getElementById('waLink').value = waUrl;
+      document.getElementById('previewLink').href = waUrl;
+      
+      const hasilSection = document.getElementById('hasil');
+      hasilSection.classList.remove('hidden');
+      hasilSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Reset button state
+      generateBtn.classList.remove('loading');
+      generateBtn.innerHTML = '<i class="fas fa-magic"></i> Buat Link WhatsApp';
+    }, 800);
   }
 
   function copyToClipboard() {
     const waLink = document.getElementById("waLink");
     waLink.select();
     waLink.setSelectionRange(0, 99999);
+    
     navigator.clipboard.writeText(waLink.value).then(() => {
-      alert("Link berhasil disalin!");
+      showAlert("Link berhasil disalin ke clipboard!", 'success');
+      
+      // Visual feedback for copy button
+      const copyBtn = event.target.closest('button');
+      const originalHTML = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+      copyBtn.style.background = 'var(--primary-color)';
+      copyBtn.style.color = 'white';
+      copyBtn.style.borderColor = 'var(--primary-color)';
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalHTML;
+        copyBtn.style.background = '';
+        copyBtn.style.color = '';
+        copyBtn.style.borderColor = '';
+      }, 2000);
+    }).catch(() => {
+      showAlert("Gagal menyalin link. Silakan copy manual.", 'error');
     });
   }
+
+  function showAlert(message, type = 'info') {
+    // Create alert element
+    const alert = document.createElement('div');
+    alert.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      color: white;
+      font-weight: 500;
+      font-size: 0.875rem;
+      z-index: 1000;
+      box-shadow: var(--shadow-lg);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      max-width: 300px;
+    `;
+    
+    if (type === 'success') {
+      alert.style.background = 'linear-gradient(135deg, var(--primary-color), var(--primary-dark))';
+      alert.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>${message}`;
+    } else if (type === 'error') {
+      alert.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+      alert.innerHTML = `<i class="fas fa-exclamation-circle" style="margin-right: 0.5rem;"></i>${message}`;
+    } else {
+      alert.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+      alert.innerHTML = `<i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i>${message}`;
+    }
+    
+    document.body.appendChild(alert);
+    
+    // Animate in
+    setTimeout(() => {
+      alert.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remove after delay
+    setTimeout(() => {
+      alert.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        document.body.removeChild(alert);
+      }, 300);
+    }, 3000);
+  }
+
+  // Add enter key support
+  document.getElementById('namaTamu').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      generateLink();
+    }
+  });
+
+  // Auto-focus on input when page loads
+  window.addEventListener('load', function() {
+    document.getElementById('namaTamu').focus();
+  });
 </script>
 
 </body>
